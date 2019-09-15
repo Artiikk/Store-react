@@ -1,12 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import ShopLayout from "./shop-layout/shop-layout.js";
+import BookstoreService from "./services/bookstore-service";
+import { BookstoreServiceProvider } from "./services/bookstore-service-context";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import store from "./store";
+
+const bookstoreService = new BookstoreService();
+
+ReactDOM.render(
+  <Provider store={store}>
+    <BookstoreServiceProvider value={bookstoreService}>
+      <Router>
+        <ShopLayout />
+      </Router>
+    </BookstoreServiceProvider>
+  </Provider>,
+  document.getElementById("root")
+);
